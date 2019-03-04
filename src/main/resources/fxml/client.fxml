@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane alignment="center" hgap="10" prefHeight="850.0" prefWidth="450.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ClientController">
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <AnchorPane prefHeight="800.0" prefWidth="400.0" GridPane.rowIndex="2">
+         <children>
+            <ImageView fx:id="ProductImageView" fitHeight="300.0" fitWidth="300.0" layoutX="50.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../placeholder.png" />
+               </image>
+            </ImageView>
+            <TableView fx:id="ItemTableView" layoutY="349.0" onMouseClicked="#selectedItem" prefHeight="400.0" prefWidth="400.0">
+              <columns>
+                <TableColumn fx:id="ItemNameColumn" prefWidth="212.79991149902344" text="Naam" />
+                <TableColumn fx:id="ItemPriceColumn" minWidth="0.0" prefWidth="186.40000915527344" text="Prijs" />
+              </columns>
+            </TableView>
+            <Button fx:id="GetPriceButton" layoutX="308.0" layoutY="760.0" mnemonicParsing="false" onAction="#GetPricePressed" text="Prijs opvragen" />
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>
