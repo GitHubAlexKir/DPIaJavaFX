@@ -1,9 +1,9 @@
-package client;
+package controller;
 
 import com.google.gson.Gson;
-import domain.ClientReply;
-import domain.ClientRequest;
-import domain.Item;
+import domain.client.ClientReply;
+import domain.client.ClientRequest;
+import domain.item.Item;
 import gateway.MessageReceiverGateway;
 import gateway.MessageSenderGateway;
 import javafx.fxml.FXML;
@@ -143,7 +143,7 @@ public class ClientController {
                if (msg instanceof TextMessage) {
                    try {
                        String Json = ((TextMessage) msg).getText();
-                       ClientReply ClientReply = gson.fromJson(Json, domain.ClientReply.class);
+                       ClientReply ClientReply = gson.fromJson(Json, domain.client.ClientReply.class);
                        add(ClientReply);
                    } catch (JMSException  e) {
                        e.printStackTrace();

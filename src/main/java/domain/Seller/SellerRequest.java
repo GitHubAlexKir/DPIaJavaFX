@@ -1,4 +1,4 @@
-package domain;
+package domain.Seller;
 
 import java.io.Serializable;
 

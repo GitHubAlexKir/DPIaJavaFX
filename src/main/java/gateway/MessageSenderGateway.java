@@ -1,10 +1,10 @@
 package gateway;
 
 import com.google.gson.Gson;
-import domain.ClientReply;
-import domain.ClientRequest;
-import domain.ItemReply;
-import domain.ItemRequest;
+import domain.client.ClientReply;
+import domain.client.ClientRequest;
+import domain.item.ItemReply;
+import domain.item.ItemRequest;
 import service.MQConnection;
 
 import javax.jms.Destination;

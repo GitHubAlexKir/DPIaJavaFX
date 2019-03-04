@@ -1,7 +1,11 @@
-package broker;
+package controller;
 
 import com.google.gson.Gson;
-import domain.*;
+import domain.client.ClientReply;
+import domain.client.ClientRequest;
+import domain.item.Item;
+import domain.item.ItemReply;
+import domain.item.ItemRequest;
 import gateway.MessageReceiverGateway;
 import gateway.MessageSenderGateway;
 import javafx.fxml.FXML;
@@ -60,7 +64,7 @@ public class BrokerController {
                if (msg instanceof TextMessage) {
                    try {
                        String Json = ((TextMessage) msg).getText();
-                       ItemReply itemReply = gson.fromJson(Json, domain.ItemReply.class);
+                       ItemReply itemReply = gson.fromJson(Json, ItemReply.class);
                        add(itemReply);
                    } catch (JMSException  e) {
                        e.printStackTrace();
@@ -98,7 +102,7 @@ public class BrokerController {
                 if (msg instanceof TextMessage) {
                     try {
                         String Json = ((TextMessage) msg).getText();
-                        ClientRequest clientRequest = gson.fromJson(Json, domain.ClientRequest.class);
+                        ClientRequest clientRequest = gson.fromJson(Json, ClientRequest.class);
                         add(clientRequest);
                     } catch (JMSException  e) {
                         e.printStackTrace();

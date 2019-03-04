@@ -1,6 +1,6 @@
 package repository;
 
-import domain.Item;
+import domain.item.Item;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="center" hgap="10" prefHeight="184.0" prefWidth="460.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ItemService.ItemController">
+<GridPane alignment="center" hgap="10" prefHeight="184.0" prefWidth="460.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
