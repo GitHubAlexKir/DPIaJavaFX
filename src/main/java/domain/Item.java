@@ -8,9 +8,13 @@ public class Item implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private String name;
     @Transient
     private String price;
-    private String name;
+    @Transient
+    private String seller;
+    @Transient
+    private String correlationID;
 
     public long getId() {
         return id;
@@ -20,18 +24,6 @@ public class Item implements Serializable {
         this.id = id;
     }
 
-    public String getPrice() {
-        if (price != null) {
-            return price;
-        }
-        else {
-            return "Niet opgevraagd.";
-        }
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
 
     public String getName() {
         return name;
@@ -41,11 +33,44 @@ public class Item implements Serializable {
         this.name = name;
     }
 
+    public String getPrice() {
+        if (price != null) {
+            return price;
+        }
+        else {
+            return "Waiting..";
+        }
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getSeller() {
+        if (seller != null) {
+            return seller;
+        }
+        else {
+            return "Waiting..";
+        }
+    }
+
+    public void setSeller(String seller) {
+        this.seller = seller;
+    }
+
+    public String getCorrelationID() {
+        return correlationID;
+    }
+
+    public void setCorrelationID(String correlationID) {
+        this.correlationID = correlationID;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
                 "id=" + id +
-                ", price=" + price +
                 ", name='" + name + '\'' +
                 '}';
     }

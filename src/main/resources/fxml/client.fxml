@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="center" hgap="10" prefHeight="850.0" prefWidth="450.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ClientController">
+<GridPane alignment="center" hgap="10" prefHeight="576.0" prefWidth="460.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ClientController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -22,20 +22,27 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <AnchorPane prefHeight="800.0" prefWidth="400.0" GridPane.rowIndex="2">
+      <AnchorPane prefHeight="705.0" prefWidth="400.0" GridPane.rowIndex="2">
          <children>
             <ImageView fx:id="ProductImageView" fitHeight="300.0" fitWidth="300.0" layoutX="50.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../placeholder.png" />
                </image>
             </ImageView>
-            <TableView fx:id="ItemTableView" layoutY="349.0" onMouseClicked="#selectedItem" prefHeight="400.0" prefWidth="400.0">
+            <TableView fx:id="ItemTableView" layoutY="349.0" onMouseClicked="#selectedItem" prefHeight="150.0" prefWidth="400.0">
               <columns>
-                <TableColumn fx:id="ItemNameColumn" prefWidth="212.79991149902344" text="Naam" />
-                <TableColumn fx:id="ItemPriceColumn" minWidth="0.0" prefWidth="186.40000915527344" text="Prijs" />
+                <TableColumn fx:id="ItemIDColumn" prefWidth="68.79998970031738" text="ID" />
+                <TableColumn fx:id="ItemNameColumn" minWidth="0.0" prefWidth="331.2000045776367" text="Naam" />
               </columns>
             </TableView>
-            <Button fx:id="GetPriceButton" layoutX="308.0" layoutY="760.0" mnemonicParsing="false" onAction="#GetPricePressed" text="Prijs opvragen" />
+            <Button fx:id="GetPriceButton" layoutX="150.0" layoutY="508.0" mnemonicParsing="false" onAction="#GetPricePressed" prefHeight="35.0" prefWidth="112.0" text="Prijs opvragen" />
+            <TableView fx:id="ClientTableView" layoutX="14.0" layoutY="553.0" prefHeight="138.0" prefWidth="384.0">
+              <columns>
+                <TableColumn fx:id="ItemRequestNameColumn" prefWidth="140.79998016357422" text="Naam" />
+                  <TableColumn fx:id="SellerColumn" prefWidth="100.0" text="Winkel" />
+                <TableColumn fx:id="ItemPriceColumn" prefWidth="142.39999389648438" text="Goedkoopste prijs" />
+              </columns>
+            </TableView>
          </children>
       </AnchorPane>
    </children>
