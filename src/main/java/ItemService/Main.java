@@ -1,4 +1,4 @@
-package client;
+package ItemService;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,13 +11,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/client.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ItemService.fxml"));
         Parent root = fxmlLoader.load();
-        primaryStage.setTitle("Client - Webshop");
+        primaryStage.setTitle("ItemService - Webshop");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        ClientController controller = fxmlLoader.<ClientController>getController();
-        controller.getProducts();
+        ItemController controller = fxmlLoader.<ItemController>getController();
         controller.loadMQRecieveFromBroker();
     }
 

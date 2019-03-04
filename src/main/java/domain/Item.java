@@ -14,6 +14,8 @@ public class Item implements Serializable {
     @Transient
     private String seller;
     @Transient
+    private String productID;
+    @Transient
     private String correlationID;
 
     public long getId() {
@@ -67,11 +69,28 @@ public class Item implements Serializable {
         this.correlationID = correlationID;
     }
 
+    public String getProductID() {
+        if (productID != null) {
+            return productID;
+        }
+        else {
+            return "Waiting..";
+        }
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", price='" + price + '\'' +
+                ", seller='" + seller + '\'' +
+                ", productID='" + productID + '\'' +
+                ", correlationID='" + correlationID + '\'' +
                 '}';
     }
 }

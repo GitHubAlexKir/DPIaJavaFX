@@ -47,8 +47,8 @@ public class ClientController {
 
 
     private ClientRepository repo;
-    //private MessageSenderGateway sender = new MessageSenderGateway("ClientRequest");
-    //private MessageReceiverGateway receiver = new MessageReceiverGateway("ClientReply");
+    private MessageSenderGateway sender = new MessageSenderGateway("ClientRequest");
+    private MessageReceiverGateway receiver = new MessageReceiverGateway("ClientReply");
     private Gson gson = new Gson();
 
 
@@ -95,14 +95,13 @@ public class ClientController {
     {
        if (selectedItem != null)
        {
-           System.out.println(selectedItem.toString());
            String corrolationId = UUID.randomUUID().toString();
            ClientRequest request = new ClientRequest(corrolationId,selectedItem.getName());
-          //try {
-          //    sender.send(request);
-          //} catch (JMSException e) {
-          //    e.printStackTrace();
-          //}
+          try {
+              sender.send(request);
+          } catch (JMSException e) {
+              e.printStackTrace();
+          }
            Item item = new Item();
            item.setCorrelationID(corrolationId);
            item.setName(selectedItem.getName());
@@ -137,29 +136,40 @@ public class ClientController {
         }
     }
 
-   //public void loadMQRecieveFromBroker()
-   //{
-   //    try {
-   //        receiver.getConsumer().setMessageListener(msg -> {
-   //            if (msg instanceof TextMessage) {
-   //                try {
-   //                    String Json = ((TextMessage) msg).getText();
-   //                    ClientReply ClientReply = gson.fromJson(Json, domain.ClientReply.class);
-   //                    add(ClientReply);
-   //                } catch (JMSException  e) {
-   //                    e.printStackTrace();
-   //                }
-   //            }
-   //        });
+   public void loadMQRecieveFromBroker()
+   {
+       try {
+           receiver.getConsumer().setMessageListener(msg -> {
+               if (msg instanceof TextMessage) {
+                   try {
+                       String Json = ((TextMessage) msg).getText();
+                       ClientReply ClientReply = gson.fromJson(Json, domain.ClientReply.class);
+                       add(ClientReply);
+                   } catch (JMSException  e) {
+                       e.printStackTrace();
+                   }
+               }
+           });
 
-   //    } catch (JMSException e) {
-   //        e.printStackTrace();
-   //    }
+       } catch (JMSException e) {
+           e.printStackTrace();
+       }
 
-   //}
+   }
 
     private void add(ClientReply clientReply) {
-
+        System.out.println("incomming client reply " + clientReply.getCorrolationID() + " " +  clientReply.getSeller() +  " " + clientReply.getPrice());
+        System.out.println("size of request items " + requestItems.size());
+        for (int i = 0; i < requestItems.size(); i++){
+            Item rr = requestItems.get(i);
+            System.out.println(rr.toString());
+            if (rr.getCorrelationID().equals(clientReply.getCorrolationID())){
+                System.out.println("MAtch found");
+                rr.setPrice(String.valueOf(clientReply.getPrice()));
+                rr.setSeller(clientReply.getSeller());
+                reloadRequests();
+            }
+        }
     }
 
 }
