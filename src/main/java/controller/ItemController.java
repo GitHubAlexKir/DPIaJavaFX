@@ -57,6 +57,7 @@ public class ItemController {
                        item.setProductID(itemReply.getProductID());
                        item.setName(itemRequest.getItemName());
                        add(item);
+                       sender.send(gson.toJson(itemReply));
                    } catch (JMSException  e) {
                        e.printStackTrace();
                    }
@@ -72,11 +73,7 @@ public class ItemController {
    public void send()
    {
        System.out.println("sending");
-       try {
-           sender.send(itemReply);
-       } catch (JMSException e) {
-           e.printStackTrace();
-       }
+
    }
     private void add(Item item) {
         NameColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));

@@ -20,6 +20,7 @@ public class BrokerMain extends Application {
         BrokerController controller = fxmlLoader.<BrokerController>getController();
         controller.loadMQRecieveFromClient();
         controller.loadMQRecieveFromItemService();
+        controller.loadMQRecieveFromSeller();
     }
 
 

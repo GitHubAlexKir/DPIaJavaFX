@@ -1,6 +1,8 @@
 package controller;
 
 import com.google.gson.Gson;
+import domain.Seller.SellerReply;
+import domain.Seller.SellerRequest;
 import domain.client.ClientReply;
 import domain.client.ClientRequest;
 import domain.item.Item;
@@ -33,8 +35,10 @@ public class BrokerController {
 
     private MessageReceiverGateway clientReceiver = new MessageReceiverGateway("ClientRequest");
     private MessageSenderGateway itemServiceSender = new MessageSenderGateway("ItemRequest");
+    private MessageSenderGateway sellerSender = new MessageSenderGateway("SellerRequest");
     private MessageSenderGateway clientSender = new MessageSenderGateway("ClientReply");
     private MessageReceiverGateway itemServiceReceiver = new MessageReceiverGateway("ItemReply");
+    private MessageReceiverGateway sellerReceiver = new MessageReceiverGateway("SellerReply");
     private Gson gson = new Gson();
 
 
@@ -78,22 +82,7 @@ public class BrokerController {
 
    }
 
-    private void add(ItemReply itemReply) {
-        for (int i = 0; i < items.size(); i++){
-            Item rr = items.get(i);
-            if (rr.getCorrelationID().equals(itemReply.getCorrolationID())){
-                rr.setProductID(itemReply.getProductID());
-                rr.setSeller("testing");
-                rr.setPrice("29.99");
-                reloadItems();
-                try {
-                    clientSender.send(new ClientReply(rr.getCorrelationID(),rr.getSeller(),Double.valueOf(rr.getPrice())));
-                } catch (JMSException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+
 
     public void loadMQRecieveFromClient()
     {
@@ -115,6 +104,27 @@ public class BrokerController {
         }
 
     }
+    public void loadMQRecieveFromSeller()
+    {
+        try {
+            sellerReceiver.getConsumer().setMessageListener(msg -> {
+                if (msg instanceof TextMessage) {
+                    try {
+                        String Json = ((TextMessage) msg).getText();
+                        SellerReply sellerReply = gson.fromJson(Json, SellerReply.class);
+                        add(sellerReply);
+                    } catch (JMSException  e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     private void add(ClientRequest clientRequest) {
         Item item = new Item();
@@ -124,11 +134,44 @@ public class BrokerController {
         reloadItems();
         ItemRequest itemRequest = new ItemRequest(item.getCorrelationID(),item.getName());
         try {
-            itemServiceSender.send(itemRequest);
+            itemServiceSender.send(gson.toJson(itemRequest));
         } catch (JMSException e) {
             e.printStackTrace();
         }
 
     }
+
+    private void add(ItemReply itemReply) {
+        for (int i = 0; i < items.size(); i++){
+            Item rr = items.get(i);
+            if (rr.getCorrelationID().equals(itemReply.getCorrolationID())){
+                rr.setProductID(itemReply.getProductID());
+                reloadItems();
+                try {
+                    System.out.println("Sending to Seller");
+                    sellerSender.send(gson.toJson(new SellerRequest(rr.getCorrelationID(),rr.getProductID())));
+                } catch (JMSException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void add(SellerReply sellerReply) {
+        for (int i = 0; i < items.size(); i++){
+            Item rr = items.get(i);
+            if (rr.getCorrelationID().equals(sellerReply.getCorrelationID())){
+                rr.setPrice(String.valueOf(sellerReply.getPrice()));
+                rr.setSeller(sellerReply.getSellerName());
+                reloadItems();
+                try {
+                    clientSender.send(gson.toJson(new ClientReply(rr.getCorrelationID(),rr.getSeller(),Double.valueOf(rr.getPrice()))));
+                } catch (JMSException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 
 }

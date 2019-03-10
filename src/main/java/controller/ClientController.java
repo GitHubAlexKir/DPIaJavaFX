@@ -98,7 +98,7 @@ public class ClientController {
            String corrolationId = UUID.randomUUID().toString();
            ClientRequest request = new ClientRequest(corrolationId,selectedItem.getName());
           try {
-              sender.send(request);
+              sender.send(gson.toJson(request));
           } catch (JMSException e) {
               e.printStackTrace();
           }

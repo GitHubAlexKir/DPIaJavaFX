@@ -1,14 +1,16 @@
 package domain.Seller;
 
-import java.io.Serializable;
-
-public class SellerRequest implements Serializable {
+public class SellerItem {
     private String correlationID;
     private String productID;
+    private String name;
+    private double price;
 
-    public SellerRequest(String correlationID, String productID) {
+    public SellerItem(String correlationID, String productID, String name, double price) {
         this.correlationID = correlationID;
         this.productID = productID;
+        this.name = name;
+        this.price = price;
     }
 
     public String getCorrelationID() {
@@ -25,5 +27,21 @@ public class SellerRequest implements Serializable {
 
     public void setProductID(String productID) {
         this.productID = productID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
