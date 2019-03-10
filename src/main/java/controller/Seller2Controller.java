@@ -78,6 +78,7 @@ public class Seller2Controller {
             selectedItem = null;
             Image image = new Image("placeholder.png");
             this.ProductImageView.setImage(image);
+            this.PriceText.setText("");
         }
     }
     @FXML
@@ -124,7 +125,9 @@ public class Seller2Controller {
           } catch (JMSException e) {
               e.printStackTrace();
           }
+           requestItems.remove(selectedItem);
            reloadRequests();
+           selectedItem();
        }
     }
 
@@ -178,13 +181,13 @@ public class Seller2Controller {
         double price = 1;
         switch (productID) {
             case "AQE49Q6FNALXXN":
-                price = 359.99;
+                price = 309.99;
                 break;
             case "BQE49Q6FNALXXN":
-                price = 539.99;
+                price = 519.99;
                 break;
             case "CQE49Q6FNALXXN":
-                price = 289.99;
+                price = 299.99;
                 break;
         }
         return price;
