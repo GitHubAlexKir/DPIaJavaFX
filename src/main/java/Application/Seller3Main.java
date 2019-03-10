@@ -1,7 +1,6 @@
 package Application;
 
-import controller.ClientController;
-import controller.SellerController;
+import controller.Seller3Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,16 +8,18 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-public class SellerMain extends Application {
+public class Seller3Main extends Application {
+
+    private String sellerName = "Seller3";
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/seller.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/seller3.fxml"));
         Parent root = fxmlLoader.load();
-        primaryStage.setTitle("Seller - Webshop");
+        primaryStage.setTitle(this.sellerName + " - Webshop");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        SellerController controller = fxmlLoader.<SellerController>getController();
+        Seller3Controller controller = fxmlLoader.<Seller3Controller>getController();
         controller.loadMQRecieveFromBroker();
     }
 
@@ -26,4 +27,5 @@ public class SellerMain extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }

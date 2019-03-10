@@ -2,8 +2,8 @@ package controller;
 
 import com.google.gson.Gson;
 import domain.Seller.SellerItem;
-import domain.Seller.SellerRequest;
 import domain.Seller.SellerReply;
+import domain.Seller.SellerRequest;
 import gateway.MessageReceiverGateway;
 import gateway.MessageSenderGateway;
 import javafx.fxml.FXML;
@@ -13,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import repository.ClientRepository;
 
 import javax.jms.JMSException;
 import javax.jms.TextMessage;
@@ -22,9 +21,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-public class SellerController {
+public class Seller2Controller {
 
     @FXML
     public TableView<SellerItem> ItemTableView;
@@ -41,7 +39,7 @@ public class SellerController {
 
 
     private MessageSenderGateway sender = new MessageSenderGateway("SellerReply");
-    private MessageReceiverGateway receiver = new MessageReceiverGateway("SellerRequest");
+    private MessageReceiverGateway receiver = new MessageReceiverGateway("Seller2Request");
     private Gson gson = new Gson();
 
     private SellerItem selectedItem;
@@ -50,9 +48,9 @@ public class SellerController {
 
     private int selectedDiscount = 0;
     private double price;
-    private String sellerName = "testing bob";
+    private String sellerName = "Seller2";
 
-    public SellerController() throws NamingException, JMSException {
+    public Seller2Controller() throws NamingException, JMSException {
         requestItems = new ArrayList<>();
     }
     @FXML
@@ -207,5 +205,4 @@ public class SellerController {
         }
         return productName;
     }
-
 }

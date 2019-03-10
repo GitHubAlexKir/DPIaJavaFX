@@ -35,7 +35,9 @@ public class BrokerController {
 
     private MessageReceiverGateway clientReceiver = new MessageReceiverGateway("ClientRequest");
     private MessageSenderGateway itemServiceSender = new MessageSenderGateway("ItemRequest");
-    private MessageSenderGateway sellerSender = new MessageSenderGateway("SellerRequest");
+    private MessageSenderGateway seller1Sender = new MessageSenderGateway("Seller1Request");
+    private MessageSenderGateway seller2Sender = new MessageSenderGateway("Seller2Request");
+    private MessageSenderGateway seller3Sender = new MessageSenderGateway("Seller3Request");
     private MessageSenderGateway clientSender = new MessageSenderGateway("ClientReply");
     private MessageReceiverGateway itemServiceReceiver = new MessageReceiverGateway("ItemReply");
     private MessageReceiverGateway sellerReceiver = new MessageReceiverGateway("SellerReply");
@@ -149,7 +151,9 @@ public class BrokerController {
                 reloadItems();
                 try {
                     System.out.println("Sending to Seller");
-                    sellerSender.send(gson.toJson(new SellerRequest(rr.getCorrelationID(),rr.getProductID())));
+                    seller1Sender.send(gson.toJson(new SellerRequest(rr.getCorrelationID(),rr.getProductID())));
+                    seller2Sender.send(gson.toJson(new SellerRequest(rr.getCorrelationID(),rr.getProductID())));
+                    seller3Sender.send(gson.toJson(new SellerRequest(rr.getCorrelationID(),rr.getProductID())));
                 } catch (JMSException e) {
                     e.printStackTrace();
                 }
