@@ -18,7 +18,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javax.jms.*;
 import javax.naming.NamingException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 public class BrokerController {
 
@@ -45,9 +48,11 @@ public class BrokerController {
 
 
     private List<Item> items;
+    private List<SellerReply> sellerReplies;
 
     public BrokerController() throws NamingException, JMSException {
         items = new ArrayList<>();
+        sellerReplies = new ArrayList<>();
     }
 
     private void reloadItems() {
@@ -61,6 +66,31 @@ public class BrokerController {
                 TableView.getItems().add(i);
             }
         }
+    }
+
+    private void checkReplies(SellerReply sellerReply){
+        List<SellerReply> sharedReplies = new ArrayList<>();
+        sharedReplies.add(sellerReply);
+        for (int i = 0; i < this.sellerReplies.size(); i++) {
+            if (sellerReplies.get(i).getCorrelationID().equals(sellerReply.getCorrelationID()))
+            {
+                sharedReplies.add(sellerReplies.get(i));
+            }
+
+        }
+        if(sharedReplies.size() == 3)
+        {
+            SellerReply minPriceReply = sharedReplies
+                    .stream()
+                    .min(Comparator.comparing(SellerReply::getPrice))
+                    .orElseThrow(NoSuchElementException::new);
+            add(minPriceReply);
+        }
+        else {
+            sellerReplies.add(sellerReply);
+        }
+
+
     }
 
    public void loadMQRecieveFromItemService()
@@ -114,7 +144,7 @@ public class BrokerController {
                     try {
                         String Json = ((TextMessage) msg).getText();
                         SellerReply sellerReply = gson.fromJson(Json, SellerReply.class);
-                        add(sellerReply);
+                        checkReplies(sellerReply);
                     } catch (JMSException  e) {
                         e.printStackTrace();
                     }
